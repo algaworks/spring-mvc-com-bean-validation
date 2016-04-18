@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+    
+<head>
+	<meta charset="UTF-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+	
+	<title>Cobrança</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<form class="form-horizontal" method="POST" th:object="${cliente}">
+	<div class="alert alert-success" th:text="${mensagem}" 
+		th:if="${not #strings.isEmpty(mensagem)}"></div>
+		
+	<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+		<div th:each="detailedError : ${#fields.detailedErrors()}">
+			<span th:text="${detailedError.message}"></span>
+		</div>
+	</div> 
+	
+
+   	<div class="panel panel-default">
+   		<div class="panel-heading">
+   			<div class="clearfix">
+   				<h1 class="panel-title aw-titulo-panel">Novo cliente</h1>
+   			</div>
+   		</div>
+   		
+   		<div class="panel-body">
+			<div class="form-group aw-required" th:classappend="${#fields.hasErrors('nome')} ? has-error">
+				<label for="nome" class="col-sm-2 control-label">Nome</label>
+				<div class="col-sm-4"> 
+					<input type="text" class="form-control" id="nome" 
+						th:field="*{nome}" autofocus="autofocus"/>
+				</div>
+			</div>
+			
+			<div class="form-group aw-required" th:classappend="${#fields.hasErrors('sexo')} ? has-error">
+				<label class="col-sm-2 control-label">Sexo</label>
+				<div class="col-sm-4">
+					<label th:each="sexo : ${sexos}" class="radio-inline">
+						<input type="radio" th:value="${sexo}" th:field="*{sexo}"/>
+						<span th:text="${sexo.descricao}"></span>
+					</label> 
+				</div>
+			</div>
+			
+			<div class="form-group aw-required" th:classappend="${#fields.hasErrors('cpf')} ? has-error">
+				<label for="cpf" class="col-sm-2 control-label">CPF</label>
+				<div class="col-sm-4"> 
+					<input type="text" class="form-control" id="cpf" th:field="*{cpf}"/>
+				</div>
+			</div>
+			
+			<div class="form-group aw-required" th:classappend="${#fields.hasErrors('idade')} ? has-error">
+				<label for="idade" class="col-sm-2 control-label">Idade</label>
+				<div class="col-sm-4"> 
+					<input type="text" class="form-control" id="idade" th:field="*{idade}"/>
+				</div>
+			</div>
+			
+			<div class="form-group" th:classappend="${#fields.hasErrors('observacao')} ? has-error">
+				<label for="observacao" class="col-sm-2 control-label">Observação</label>
+				<div class="col-sm-4"> 
+					<textarea class="form-control" id="observacao" 
+						th:field="*{observacao}"></textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
+			</div>
+		</div>
+   	</div>
+   </form>
+
+</body>
+</html>
